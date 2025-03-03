@@ -1,0 +1,3 @@
+[[runners]]
+  [runners.kubernetes]
+      service_account_overwrite_allowed = "buildah-*"

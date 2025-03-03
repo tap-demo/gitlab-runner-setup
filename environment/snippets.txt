@@ -1,0 +1,4 @@
+cosign verify --certificate-identity admin@opentlc.com --certificate-oidc-issuer https://keycloak-keycloak-system.apps.cluster-5vwvp.5vwvp.sandbox2893.opentlc.com/auth/realms/trusted-artifact-signer --offline --local-image ./images/test/0.0.1/images/
+
+cosign verify --certificate-identity admin@opentlc.com --certificate-oidc-issuer https://keycloak-keycloak-system.apps.cluster-5vwvp.5vwvp.sandbox2893.opentlc.com/auth/realms/trusted-artifact-signer --offline --local-image ./images/test/0.0.1/images/ | jq
+

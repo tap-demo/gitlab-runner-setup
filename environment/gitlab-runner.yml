@@ -1,0 +1,12 @@
+apiVersion: apps.gitlab.com/v1beta2
+kind: Runner
+metadata:
+  name: gitlab-runner
+spec:
+  gitlabUrl: https://gitlab-gitlab.apps.cluster-xl8xb.xl8xb.sandbox1569.opentlc.com
+  buildImage: registry.access.redhat.com/ubi9:latest
+  token: gitlab-runner-secret
+  config: custom-config-toml
+
+# see https://docs.gitlab.com/ee/ci/docker/buildah_rootless_tutorial.html 
+# run "create_cm_custom_config_toml.sh" first
