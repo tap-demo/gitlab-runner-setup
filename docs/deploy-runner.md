@@ -102,7 +102,13 @@ clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "builda
 configmap/custom-config-toml created
 ```
 
-4) Create the secrct with the authentication token
+4) Add the Auth Token and create the secrct with the authentication token
+
+In the [gitlab-runner-secret.yml](../environment/gitlab-runner-secret.yml), add the authentication token obtained above
+
+![](../docs/assets/gitlab-add-auth-token-to-secret.png)
+
+then create the secret
 
 ```
 [🎩︎mnagel environment] (main) $ oc apply -f gitlab-runner-secret.yml 
@@ -111,6 +117,13 @@ secret/gitlab-runner-secret created
 ```
 
 5) Create the Runner CR
+
+With the secret and the configMap in place, make sure you have added the GitLab URL to the [gitlab-runner.yml](../docs/assets/gitlab-add-url-to-runner-yaml.png) as shown above.
+
+![](../docs/assets/gitlab-add-url-to-runner-yaml.png)
+
+then create the runner
+
 ```
 [🎩︎mnagel environment] (main) $ oc apply -f gitlab-runner.yml 
 runner.apps.gitlab.com/gitlab-runner created
@@ -118,7 +131,7 @@ runner.apps.gitlab.com/gitlab-runner created
 
 6) Verify the runner 
 
-__*NOTE:*__ Sometimes (as in the example below) the registration on the Operator is not updated and remains in "pending" and "registration status unavailable" - so make sure you check the runners page in GitLab. In this example case, the same runner registered fine and is online (ready to accept jobs).
+__*NOTE:*__ Sometimes (as in the example below) the registration on the Operator is not updated in the runner k8s object and remains in "pending" and "registration status unavailable", even though it worked - so make sure you check the runners page in GitLab. In this example case, the same runner registered fine and is online (ready to accept jobs).
 
 ![](../docs/assets/gitlab-runner-is-online.png)
 
