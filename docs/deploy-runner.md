@@ -76,9 +76,11 @@ You can now navigate back to the runners page, as we don't need any of the insta
 
 ![](../docs/assets/gitlab-new-project-runner.png)
 
+Once we deploy the runner on OpenShift, it will communicate with the GitLab instance and the warning (exclamation mark) will disappear.
+
 # Putting it all together
 
-1) Create the cicd-tool project or go to it if already created (or any other project, but check the k8s manifests that use the namespace)
+__1) Create the cicd-tool project or go to it if already created (or any other project, but check the k8s manifests that use the namespace)__
 
 ```
 [🎩︎mnagel environment] (main) $ oc project cicd-tools 
@@ -86,7 +88,7 @@ Now using project "cicd-tools" on server "https://api.cluster-xl8xb.xl8xb.sandbo
 
 ```
 
-2) Create the Serviceaccount and add the SCC
+__2) Create the Serviceaccount and add the SCC__
 
 ```
 [🎩︎mnagel environment] (main) $ oc apply -f buildah-sa.yml 
@@ -95,14 +97,14 @@ serviceaccount/buildah-sa created
 clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "buildah-sa"
 ```
 
-3) Create the configMap needed by the runner definition
+__3) Create the configMap needed by the runner definition__
 
 ``` 
 [🎩︎mnagel environment] (main) $ oc create configmap custom-config-toml --from-file config.toml=custom-config.toml -n cicd-tools
 configmap/custom-config-toml created
 ```
 
-4) Add the Auth Token and create the secrct with the authentication token
+__4) Add the Auth Token and create the secrct with the authentication token__
 
 In the [gitlab-runner-secret.yml](../environment/gitlab-runner-secret.yml), add the authentication token obtained above
 
@@ -116,7 +118,7 @@ secret/gitlab-runner-secret created
 
 ```
 
-5) Create the Runner CR
+__5) Create the Runner CR__
 
 With the secret and the configMap in place, make sure you have added the GitLab URL to the [gitlab-runner.yml](../docs/assets/gitlab-add-url-to-runner-yaml.png) as shown above.
 
@@ -129,7 +131,7 @@ then create the runner
 runner.apps.gitlab.com/gitlab-runner created
 ```
 
-6) Verify the runner 
+__6) Verify the runner__
 
 __*NOTE:*__ Sometimes (as in the example below) the registration on the Operator is not updated in the runner k8s object and remains in "pending" and "registration status unavailable", even though it worked - so make sure you check the runners page in GitLab. In this example case, the same runner registered fine and is online (ready to accept jobs).
 
